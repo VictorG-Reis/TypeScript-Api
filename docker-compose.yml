@@ -1,0 +1,24 @@
+version: "3"
+services:
+  api:
+    image: mcr.microsoft.com/devcontainers/typescript-node:16
+    container_name: api
+    tty: true
+    stdin_open: true
+    command: sh
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - 3000:3000
+    env_file: .env
+  db:
+    image: mysql:8.0.32
+    container_name: db
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQLPASSWORD}
